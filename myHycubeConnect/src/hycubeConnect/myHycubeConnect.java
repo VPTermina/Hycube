@@ -43,16 +43,14 @@ public class myHycubeConnect {
 
 		logger.info( "Please check the user " + userPrefs.get("httpServer",new String()));		
 
-        httpConnectionTools myConnection = new httpConnectionTools(Rocco, userPrefs.get("httpPort",new String()), userPrefs.get("httpUsername",new String()), userPrefs.get("httpUserPasswort",new String()));
-        try {
-			if (myConnection.runMe()) {
-			    logger.error("Didn't do it.");
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			logger.error("Didn't do it.");
-			e.printStackTrace();
-		}
+        //httpConnectionTools myConnection = new httpConnectionTools(Rocco, userPrefs.get("httpPort",new String()), userPrefs.get("httpUsername",new String()), userPrefs.get("httpUserPasswort",new String()));
+        
+		httpConnectionTools myConnection = new httpConnectionTools("http://192.168.3.166/info/.");
+        
+        myConnection.auth();
+        myConnection.getValues();
+        myConnection.getValuesIntervall();
+        
         
         		
 		logger.info(  "Meine Info-Meldung aus MeineKlasse2."  );

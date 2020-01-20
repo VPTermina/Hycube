@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang ="de">
+<head>
+
+<meta charset ="utf-8"/>
+</head>
+<body>
+
+
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script type ="text/javascript">
+
+
+var auth_token;
+var user = "hycube";
+var password = "hycube";
+var req_url = "http://192.168.3.166/auth/"
+
+var ret = $.ajax ({
+url: req_url,
+headers: { "Authorization": btoa ("Basic " + user + ":" + password ) },});
+
+ret.done (
+function (data , status ) {
+auth_token = data ;
+var req_url = "http://192.168.3.166/get_values/";
+var ret = $.ajax ({
+url: req_url ,
+headers: { "Authorization": auth_token },
+});
+ret.done (
+function (data , status ){
+console.log ( data );
+});
+ret.fail (
+function (jqXHR , textStatus , errorThrown ) {
+console.log ( errorThrown );
+});
+});
+ret.fail (
+function (jqXHR , textStatus , errorThrown ) {
+console.log ( errorThrown );
+});
+</script>
+
+Testseite1
+
+
+</body>
+</html>
