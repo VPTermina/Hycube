@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="basePath">logFolder</Property>
+    </Properties>
+ 
+    <Appenders>
+        <RollingFile name="fileLogger" fileName="${basePath}/app-info.log" filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+ 
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console>
+        
+        
+    </Appenders>
+    <Loggers>
+        <Logger name="hycubeConnect" level="debug" additivity="false">
+            <appender-ref ref="console" level="debug" />
+            <appender-ref ref="fileLogger" level="debug" />
+            
+        </Logger>
+        <Root level="trace">
+            <appender-ref ref="console" ></appender-ref>
+        </Root>
+        <Logger name="hycubeConnect.hycubeConnect" level="off" additivity="false">
+        	<appender-ref ref="console" level="debug"></appender-ref>
+        	<appender-ref ref="fileLogger" level="trace"></appender-ref>
+        </Logger>
+    </Loggers>
+</Configuration>
