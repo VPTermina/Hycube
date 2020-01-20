@@ -33,7 +33,7 @@ public class httpConnectionTools {
 	}
 
 	
-	
+	 
 	private static final String USER_AGENT = "Mozilla/5.0";
 	//private static final String GET_URL = "http://localhost:9090/SpringMVCExample";
 	//private String GET_URL = "http://easy-test.nucleus.atom.ads:8080/experience/";
