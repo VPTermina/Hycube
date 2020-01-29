@@ -8,11 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.fuin.utils4j.PropertiesFilePreferencesFactory;
 
+import de.gallas_it.sql.DatabaseConnection;
 import httpConnections.httpConnectionTools;
 
 
 /**
  * Ein Programm um den HyCube zu kontaktieren und auszulesen.
+ * Die Ergebnisse werden im SQL Server abgelegt
+ * 
  * Anfrage via http request
  *
  * @author Rocco Gallas
@@ -35,23 +38,29 @@ public class myHycubeConnect {
 		
 		
 		final Preferences userPrefs = Preferences.userRoot();
+		
 		userPrefs.putInt("a", 1);
 		userPrefs.put("b", "test");
 		
-		String Rocco = userPrefs.get("httpServer",new String());
+		String myHttpServer = userPrefs.get("httpServer","noValue");
 		
-
-		logger.info( "Please check the user " + userPrefs.get("httpServer",new String()));		
+		logger.info( "The Http server:" + myHttpServer);		
 
         //httpConnectionTools myConnection = new httpConnectionTools(Rocco, userPrefs.get("httpPort",new String()), userPrefs.get("httpUsername",new String()), userPrefs.get("httpUserPasswort",new String()));
+        		//httpConnectionTools myConnection = new httpConnectionTools("http://192.168.3.166/info/.");
+		
+		httpConnectionTools myConnection = new httpConnectionTools(myHttpServer);
         
-		httpConnectionTools myConnection = new httpConnectionTools("http://192.168.3.166/info/.");
+        //myConnection.auth();
+        //myConnection.getValues();
+        //myConnection.getValuesIntervall();
         
-        myConnection.auth();
-        myConnection.getValues();
-        myConnection.getValuesIntervall();
-        
-        
+        // SQL connection
+		
+		DatabaseConnection myDBConnect = new DatabaseConnection("","MySQL");
+		
+		
+		
         		
 		logger.info(  "Meine Info-Meldung aus MeineKlasse2."  );
 		logger.warn(  "Meine Warn-Meldung aus MeineKlasse2."  );
