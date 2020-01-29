@@ -11,6 +11,10 @@ import org.fuin.utils4j.PropertiesFilePreferencesFactory;
 import de.gallas_it.sql.DatabaseConnection;
 import httpConnections.httpConnectionTools;
 
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+
+
 
 /**
  * Ein Programm um den HyCube zu kontaktieren und auszulesen.

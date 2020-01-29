@@ -16,7 +16,7 @@ public class DatabaseConnection {
                 System.out.println("JDBC-Treiber geladen"); 
             } 
         } catch (ClassNotFoundException e) { 
-            System.err.println("Fehler beim Laden des JDBC-Treibers \n. Please download from https://dev.mysql.com/downloads/connector/j/"); 
+            System.err.println("Fehler beim Laden des JDBC-Treibershdh \n. Please download from https://dev.mysql.com/downloads/connector/j/"); 
             System.exit(1); 
         } 
 	
