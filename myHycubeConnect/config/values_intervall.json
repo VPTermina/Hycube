@@ -1,0 +1,46 @@
+{
+	"10:04:00":{
+" Chg 1 _Bat_I ": "1.35",
+" Chg 1 _Bat_P ": "71.0",
+" Chg 1 _Bat_V ": "52.76",
+" Inv 1 _Grd_I ": "4.3",
+" Inv 1 _Grd_P ": "967.0",
+" Inv 1 _Grd_V ": "229.2",
+" Inv 1 _Grd_f ": "49.99",
+" Inv 1 _PvMpp 1_I": "2.3",
+" Inv 1 _PvMpp 1_P": "905.0",
+" Inv 1 _PvMpp 1_V": "393.7",
+" Inv 1 _PvMpp 2_I": "0.6",
+" Inv 1 _PvMpp 2_P": "214.0",
+" Inv 1 _PvMpp 2_V": "357.7",
+" Inv 2 _Grd_I ": "0.0",
+" Inv 2 _Grd_P ": "0.0",
+" Inv 2 _Grd_V ": "0.0",
+" Inv 2 _PvMpp 1_P": "0.0",
+" Inv 2 _PvMpp 2_P": "0.0",
+" Mtr 1_P": "-846.5",
+" Mtr 2_P": "0.0"
+}
+"10:05:00": {
+" Chg 1 _Bat_I ": "1.33",
+" Chg 1 _Bat_P ": "70.0",
+" Chg 1 _Bat_V ": "52.9",
+" Inv 1 _Grd_I ": "4.3",
+" Inv 1 _Grd_P ": "971.0",
+" Inv 1 _Grd_V ": "229.1",
+" Inv 1 _Grd_f ": "50.02",
+" Inv 1 _PvMpp 1_I": "2.3",
+" Inv 1 _PvMpp 1_P": "905.0",
+" Inv 1 _PvMpp 1_V": "393.7",
+" Inv 1 _PvMpp 2_I": "0.6",
+" Inv 1 _PvMpp 2_P": "215.0",
+" Inv 1 _PvMpp 2_V": "359.7",
+" Inv 2 _Grd_I ": "0.0",
+" Inv 2 _Grd_P ": "0.0",
+" Inv 2 _Grd_V ": "0.0",
+" Inv 2 _PvMpp 1_P": "0.0",
+" Inv 2 _PvMpp 2_P": "0.0",
+" Mtr 1_P": "-850.5",
+" Mtr 2_P": "0.0"
+ }
+}

@@ -1,0 +1,20 @@
+{
+	" Battery_C ": 55,
+	" Battery_I ": -3.03,
+	" Battery_P ": -149,	
+	" Battery_V ": 48.93,
+	" Grid_f ": 49.99,
+	" Grid_P ": 64,
+	" Grid_V ": 228.4,
+	" Home_P ": 144,
+	" Inv 1_I": 0.8,
+	" Inv 1_P": 80,
+	" Inv 1_V": 228.4,
+	" Solar 1_P": 0,
+	" Solar 1_I": 0,
+	" Solar 1_V": 0,
+	" solar 2_P": 0,
+	" solar 2_I": 0,
+	" solar 2_V": 0,
+	" solar_total_P ": 0
+	}

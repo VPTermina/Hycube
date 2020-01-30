@@ -1,6 +1,8 @@
-package httpConnections;
+package de.gallas_it.http;
+
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,7 +11,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
 
-public class httpConnectionTools {
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
+import javax.json.spi.JsonProvider;
+
+
+public class HttpConnection {
      String serverDNSname;
      String serverPort;
      String serverUserName;
@@ -26,7 +42,7 @@ public class httpConnectionTools {
  * @param serverPassword
  */
      
-	public httpConnectionTools(String serverDNSname, String serverPort, String serverUserName, String serverPassword) {
+	public HttpConnection(String serverDNSname, String serverPort, String serverUserName, String serverPassword) {
 		super();
 		this.serverDNSname = serverDNSname;
 		this.serverPort = serverPort;
@@ -39,7 +55,7 @@ public class httpConnectionTools {
 	
 	
 	
-	public httpConnectionTools(String http) {
+	public HttpConnection(String http) {
 		super();
 		this.httpCommand = http;
 		this.authCommand = "http://192.168.3.166/auth/.";
@@ -86,6 +102,37 @@ public class httpConnectionTools {
         return true;
     }
 	
+	
+	/**
+	 *
+	 *Returns the follwoing JSON object
+	{
+	" Battery_C ": 55,
+	" Battery_I ": -3.03,
+	" Battery_P ": -149,	
+	" Battery_V ": 48.93,
+	" Grid_f ": 49.99,
+	" Grid_P ": 64,
+	" Grid_V ": 228.4,
+	" Home_P ": 144,
+	" Inv 1_I": 0.8,
+	" Inv 1_P": 80,
+	" Inv 1_V": 228.4,
+	" Solar 1_P": 0,
+	" Solar 1_I": 0,
+	" Solar 1_V": 0,
+	" solar 2_P": 0,
+	" solar 2_I": 0,
+	" solar 2_V": 0,
+	" solar_total_P ": 0
+	}
+	 * 
+	 * 
+	 * 
+	 * @return
+	 */
+	
+	
 	public boolean getValues() {
 
         try {
@@ -111,6 +158,65 @@ public class httpConnectionTools {
         }
         return true;
     }
+	
+	
+    public void interpretJSONgetValues() throws FileNotFoundException {
+    	
+    	InputStream fis = new FileInputStream("config/values.json");
+
+        JsonReader reader = Json.createReader(fis);
+
+        JsonObject personObject = reader.readObject();
+
+        reader.close();
+
+        System.out.println("Name   : " + personObject.getInt(" Battery_C "));
+        System.out.println("Name   : " + personObject.getInt(" Grid_P "));
+        
+
+    
+    }
+	
+	public void testInterpretJSON() throws FileNotFoundException {
+		
+		InputStream fis = new FileInputStream("config/person.json");
+
+        JsonReader reader = Json.createReader(fis);
+
+        JsonObject personObject = reader.readObject();
+
+        reader.close();
+
+        System.out.println("Name   : " + personObject.getString("name"));
+        System.out.println("Age    : " + personObject.getInt("age"));
+        System.out.println("Married: " + personObject.getBoolean("isMarried"));
+
+        JsonObject addressObject = personObject.getJsonObject("address");
+        System.out.println("Address: ");
+        System.out.println(addressObject.getString("street"));
+        System.out.println(addressObject.getString("zipCode"));
+
+        System.out.println("Phone  : ");
+        JsonArray phoneNumbersArray = personObject.getJsonArray("phoneNumbers");
+
+        for (JsonValue jsonValue : phoneNumbersArray) {
+            System.out.println(jsonValue.toString());
+        }
+    }
+	
+	
+	
+	
+	
+
+	
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	
 	
 	public boolean getValuesIntervall() {
 

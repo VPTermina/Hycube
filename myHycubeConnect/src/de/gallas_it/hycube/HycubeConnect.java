@@ -1,6 +1,7 @@
-package hycubeConnect;
+package de.gallas_it.hycube;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.prefs.Preferences;
 
@@ -9,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.fuin.utils4j.PropertiesFilePreferencesFactory;
 
 import de.gallas_it.sql.DatabaseConnection;
-import httpConnections.httpConnectionTools;
+import de.gallas_it.http.*;
 
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
@@ -25,8 +26,10 @@ import java.nio.file.Files;
  * @author Rocco Gallas
  * @version 1.0
  */
-public class myHycubeConnect {
-	private static final Logger logger = LogManager.getLogger(myHycubeConnect.class);
+public class HycubeConnect {
+
+
+	private static final Logger logger = LogManager.getLogger(HycubeConnect.class);
 
 	
 	/**
@@ -53,7 +56,7 @@ public class myHycubeConnect {
         //httpConnectionTools myConnection = new httpConnectionTools(Rocco, userPrefs.get("httpPort",new String()), userPrefs.get("httpUsername",new String()), userPrefs.get("httpUserPasswort",new String()));
         		//httpConnectionTools myConnection = new httpConnectionTools("http://192.168.3.166/info/.");
 		
-		httpConnectionTools myConnection = new httpConnectionTools(myHttpServer);
+		HttpConnection myConnection = new HttpConnection(myHttpServer);
         
         //myConnection.auth();
         //myConnection.getValues();
@@ -61,8 +64,20 @@ public class myHycubeConnect {
         
         // SQL connection
 		
-		DatabaseConnection myDBConnect = new DatabaseConnection("","MySQL");
+		DatabaseConnection myDBConnect = new DatabaseConnection("localhost","rocco", "wwkasper01!","world", "MySQL");
+		//myDBConnect.sendSQLQuery("select * from city");
 		
+		//JSON tes
+		try {
+			myConnection.interpretJSONgetValues();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		ValuesStruct myValues = new ValuesStruct();
+		myValues.init();
 		
 		
         		
