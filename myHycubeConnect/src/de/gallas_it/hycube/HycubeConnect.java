@@ -53,31 +53,42 @@ public class HycubeConnect {
 		
 		logger.info( "The Http server:" + myHttpServer);		
 
-        //httpConnectionTools myConnection = new httpConnectionTools(Rocco, userPrefs.get("httpPort",new String()), userPrefs.get("httpUsername",new String()), userPrefs.get("httpUserPasswort",new String()));
-        		//httpConnectionTools myConnection = new httpConnectionTools("http://192.168.3.166/info/.");
+       // httpConnectionTools myConnection = new HttpConnection(userPrefs.get("", userPrefs.get("httpPort",new String()), userPrefs.get("httpUsername",new String()), userPrefs.get("httpUserPasswort",new String()));
+		 HttpConnection myConnection = new HttpConnection("192.168.3.166","80","hycube","hycube");
 		
-		HttpConnection myConnection = new HttpConnection(myHttpServer);
+		
+		//httpConnectionTools myConnection = new httpConnectionTools("http://192.168.3.166/info/.");
+		
+		//HttpConnection myConnection = new HttpConnection(myHttpServer);
         
-        //myConnection.auth();
+        myConnection.auth();
         //myConnection.getValues();
-        //myConnection.getValuesIntervall();
+       
+        
+        //myConnection.getValuesPrintScreen();
+        
+        myConnection.getValuesIntervall();
         
         // SQL connection
 		
-		DatabaseConnection myDBConnect = new DatabaseConnection("localhost","rocco", "wwkasper01!","world", "MySQL");
-		//myDBConnect.sendSQLQuery("select * from city");
-		
+		//DatabaseConnection myDBConnect = new DatabaseConnection("localhost","rocco", "wwkasper01!","world", "MySQL");
+		//DatabaseConnection myDBConnect = new DatabaseConnection("192.168.3.10","rocco", "IwiWW42!","consumptions", "MySQL");
+		//myDBConnect.sendSQLQuery("select * from devices");
+		//myDBConnect.sendInsert("","","","","","");
 		//JSON tes
-		try {
+		 
+		/*
+		 * try {
+		
 			myConnection.interpretJSONgetValues();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		 */
 		
 		ValuesStruct myValues = new ValuesStruct();
-		myValues.init();
+		//myValues.init();
 		
 		
         		

@@ -94,12 +94,72 @@ try{
 Statement stmt=this.connection.createStatement();  
 ResultSet rs=stmt.executeQuery(query);  
 while(rs.next())  
-System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));  
+System.out.println(rs.getString(1)+"  "+rs.getString(2)+"  "+rs.getString(3));  
 this.connection.close();  
 }catch(Exception e){ System.out.println(e);}  
 }
 
 
+/**
+ * 
+ * INSERT INTO `HouseConsumption`.`measurement`
+(`idmeasurement`,
+`date`,
+`value`,
+`type`,
+`remarks`,
+`devices_iddevices`)
+VALUES
+(<{idmeasurement: }>,
+<{date: }>,
+<{value: }>,
+<{type: }>,
+<{remarks: }>,
+<{devices_iddevices: }>);
+SELECT * FROM HouseConsumption.measurement;
+ * 
+ */
+
+public void sendInsertI(String date,Integer value,String remarks , String deviceID, String shortDeviceID) {
+	
+
+
+String query = "INSERT INTO `consumptions`.`measurements`(`date`,`value`,`remarks`,`devices_idshortname`,`types_idtypes`) VALUES ('" + date + "'," + value + ",'','Hycube1'," +"'"+ shortDeviceID + "'" +");";
+
+
+try{  
+	
+	Statement stmt = this.connection.createStatement();
+    stmt.execute(query);	
+	
+	
+ 
+//this.connection.close();  
+}catch(Exception e){ System.out.println(e);}  	
+
+
+}
+
+
+public void sendInsertD(String date,Double value,String remarks , String deviceID, String shortDeviceID) {
+	
+
+
+String query = "INSERT INTO `consumptions`.`measurements`(`date`,`value`,`remarks`,`devices_idshortname`,`types_idtypes`) VALUES ('" + date + "'," + value + ",'','Hycube1'," +"'"+ shortDeviceID + "'" +");";
+
+
+try{  
+	
+	Statement stmt = this.connection.createStatement();
+    stmt.execute(query);	
+	
+	
+ 
+//this.connection.close();  
+}catch(Exception e){ System.out.println(e);}  	
+
+
+}
 
 
 

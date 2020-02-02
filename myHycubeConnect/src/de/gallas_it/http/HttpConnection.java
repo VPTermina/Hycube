@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
 
@@ -17,11 +19,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import de.gallas_it.sql.DatabaseConnection;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
+
 import javax.json.spi.JsonProvider;
 
 
@@ -52,16 +60,6 @@ public class HttpConnection {
 	     GET_URL = "http://"+ this.serverDNSname +":8080/experience/";
 	}
 
-	
-	
-	
-	public HttpConnection(String http) {
-		super();
-		this.httpCommand = http;
-		this.authCommand = "http://192.168.3.166/auth/.";
-		this.authToken = null;
-	}
-	
 	 
 	private static final String USER_AGENT = "Mozilla/5.0";
 	//private static final String GET_URL = "http://localhost:9090/SpringMVCExample";
@@ -73,20 +71,25 @@ public class HttpConnection {
 	
 	
 	
-	
+	/**
+	 * 
+	 * 
+	 * @return
+	 */
 	
 	public boolean auth() {
 
         try {
-            URL url = new URL ("http://192.168.3.166/auth/");
+            URL url = new URL ("http://"+ this.serverDNSname + "/auth/");
 
-            String encoding = Base64.getEncoder().encodeToString(("Basic "+"hycube:hycube").getBytes("UTF-8"));
+            String encoding = Base64.getEncoder().encodeToString(("Basic "+this.serverUserName +":" + this.serverPassword).getBytes("UTF-8"));
             
             //String encoding = "hycube:hycube";
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setRequestProperty  ("Authorization", encoding);
+            
             InputStream content = (InputStream)connection.getInputStream();
             BufferedReader in   = 
                 new BufferedReader (new InputStreamReader (content));
@@ -126,14 +129,235 @@ public class HttpConnection {
 	" solar 2_V": 0,
 	" solar_total_P ": 0
 	}
-	 * 
+	 *  Battery_C
+ Battery_I
+ Battery_P
+ Battery_V
+ Grid_f
+ Grid_P
+ Grid_V
+ Home_P
+ Inv 1_I
+ Inv 1_P
+ Inv 1_V
+ Solar 1_P
+ Solar 1_I
+ Solar 1_V
+ solar 2_P
+ solar 2_I
+ solar 2_V
+ solar_total_P
+
 	 * 
 	 * 
 	 * @return
 	 */
 	
-	
 	public boolean getValues() {
+
+        try {
+            URL url = new URL ("http://"+ this.serverDNSname + "/get_values/");
+
+            
+            //String encoding = "hycube:hycube";
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty  ("Authorization", this.authToken);
+            
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in   = 
+                new BufferedReader (new InputStreamReader (content));
+            
+            String line;
+            
+            String line1="";
+            while ((line = in.readLine()) != null) {
+             line1=line1+line;
+           
+            
+            }
+
+            // neue lib
+            
+            try {
+    	        JSONObject jsonObject = new JSONObject(line1);
+    	        
+    	        System.out.println(jsonObject.isEmpty());
+    	       
+    	        
+    	        if (!jsonObject.isEmpty()) {
+    	        
+    	        	DatabaseConnection myDBConnect = new DatabaseConnection("192.168.3.10","rocco", "IwiWW42!","consumptions", "MySQL");
+    	        	helpJson2Database("Battery_C",jsonObject ,"i",myDBConnect);
+
+    	         	        helpJson2Database("Battery_I",jsonObject ,"d",myDBConnect);
+ 
+    	        
+    	        helpJson2Database("Battery_P",jsonObject ,"i",myDBConnect);
+
+                
+                helpJson2Database("Battery_V",jsonObject ,"d",myDBConnect);
+     
+                
+                helpJson2Database("Grid_P",jsonObject ,"d",myDBConnect);
+     
+                
+                helpJson2Database("Grid_V",jsonObject ,"d",myDBConnect);
+  
+                
+                helpJson2Database("Home_P",jsonObject ,"d",myDBConnect);
+
+                
+                helpJson2Database("Inv1_I",jsonObject ,"d",myDBConnect);
+   
+                
+                helpJson2Database("Inv1_P",jsonObject ,"i",myDBConnect);
+    
+                
+                helpJson2Database("Inv1_V",jsonObject ,"d",myDBConnect);
+       
+                
+                
+                helpJson2Database("Meter2_P",jsonObject ,"d",myDBConnect);
+
+                
+                helpJson2Database("Solar1_I",jsonObject ,"d",myDBConnect);
+     
+                
+                helpJson2Database("Solar1_P",jsonObject ,"i",myDBConnect);
+      
+                
+                helpJson2Database("Solar1_V",jsonObject ,"d",myDBConnect);
+           
+                
+                helpJson2Database("solar2_I",jsonObject ,"d",myDBConnect);
+            
+                
+                helpJson2Database("solar2_P",jsonObject ,"i",myDBConnect);
+          
+                
+                helpJson2Database("solar2_V",jsonObject ,"d",myDBConnect);
+           
+                
+                helpJson2Database("solar_total_P",jsonObject ,"i",myDBConnect);
+             
+    	        }
+                
+                
+    	        
+    	     	        
+          
+    	    } catch (JSONException e) {
+    	        e.printStackTrace();
+    	      return false;
+    	}
+	        
+
+            
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+          
+        }
+        return true;
+    }
+	
+    private void helpJson2Screen(String name, JSONObject jo, String type) {
+    	
+    	switch(type){
+        case "s":
+        	System.out.println(name + ": " + jo.getString(name));
+            break;
+        case "i":
+        	System.out.println(name +"  : " + jo.getInt(name));
+            break;
+        case "d":
+        	System.out.println(name +  "  : " + jo.getDouble(name));
+            break;
+
+        default:
+            System.out.println("i liegt nicht zwischen null und drei");
+        }
+    }
+    	
+    	
+private void helpJson2Database(String name, JSONObject jo, String type, DatabaseConnection myDBConnect) {
+    	
+	
+
+
+	LocalDateTime now = LocalDateTime.now();
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+    
+	String aktDate = now.format(formatter);
+	
+	
+	
+    	switch(type){
+        case "s":
+        	System.out.println(name + ": " + jo.getString(name));
+            break;
+        case "i":
+        	myDBConnect.sendInsertI(aktDate,jo.getInt(name),"","",name);        	
+        	System.out.println(name +"  : " + jo.getInt(name));
+            break;
+        case "d":
+        	myDBConnect.sendInsertD(aktDate,jo.getDouble(name),"","",name);
+        	System.out.println(name +  "  : " + jo.getDouble(name));
+            break;
+
+        default:
+            System.out.println("i liegt nicht zwischen null und drei");
+        }
+    } 	
+    	
+  
+	
+	
+	
+	/**
+	 * 
+	 * Ausgabe des http Objectes am Screen
+	 * 
+	 * @return
+	 */
+	public boolean getValuesPrintScreen() {
+
+        try {
+URL url = new URL ("http://"+ this.serverDNSname + "/get_values/");
+
+            
+            //String encoding = "hycube:hycube";
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty  ("Authorization", this.authToken);
+            
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in   = 
+                new BufferedReader (new InputStreamReader (content));
+
+        
+
+           String line;
+           while ((line = in.readLine()) != null) {
+            
+           	System.out.println(line); 
+           }
+            
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+          
+        }
+        return true;
+    }
+	
+	
+
+	
+	public boolean getValuesFromfile() {
 
         try {
             URL url = new URL ("http://192.168.3.166/get_values/");
@@ -147,6 +371,20 @@ public class HttpConnection {
             InputStream content = (InputStream)connection.getInputStream();
             BufferedReader in   = 
                 new BufferedReader (new InputStreamReader (content));
+            
+
+
+            JsonReader reader = Json.createReader(in);
+            
+
+            JsonObject personObject = reader.readObject();
+
+            reader.close();
+
+            System.out.println("Name   : " + personObject.getInt("Battery_C"));
+            System.out.println("Name   : " + personObject.getInt("Grid_P"));
+       
+            
             String line;
             while ((line = in.readLine()) != null) {
              
